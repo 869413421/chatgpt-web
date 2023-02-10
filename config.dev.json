@@ -1,0 +1,10 @@
+{
+  "api_key": "your api key",
+  "bot_desc": "Marv 是一个聊天机器人，它不情愿地用讽刺的回答来回答问题",
+  "max_tokens": 60,
+  "model": "text-davinci-003",
+  "temperature": 0.5,
+  "top_p": 0.3,
+  "presence_penalty": 0.5,
+  "frequency_penalty": 0.0
+}

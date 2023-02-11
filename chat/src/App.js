@@ -19,7 +19,7 @@ const defaultQuickReplies = [
 const initialMessages = [
     {
         type: 'text',
-        content: {text: '您好，我是AI编程助理，开源于：https://github.com/869413421/chatgpt。'},
+        content: {text: '您好，我是AI助理，开源于：https://github.com/869413421/chatgpt-web。'},
         user: {avatar: '//gitclone.com/download1/gitclone.png'},
     },
 ];
@@ -87,7 +87,7 @@ function App() {
 
     function handleQuickReplyClick(item) {
         if (item.name === "清空会话") {
-
+            window.location.reload()
         }
     }
 

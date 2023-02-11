@@ -14,6 +14,7 @@ import (
 type Configuration struct {
 	// gpt apikey
 	ApiKey string `json:"api_key"`
+	Port   int    `json:"port"`
 	//
 	BotDesc string `json:"bot_desc"`
 	// GPT请求最大字符数
@@ -36,11 +37,12 @@ func LoadConfig() *Configuration {
 		// 给配置赋默认值
 		config = &Configuration{
 			MaxTokens:        60,
+			Port:             8080,
 			Model:            "text-davinci-003",
-			Temperature:      0.5,
-			TopP:             0.3,
-			FrequencyPenalty: 0.5,
-			PresencePenalty:  0.0,
+			Temperature:      0.9,
+			TopP:             1,
+			FrequencyPenalty: 0.0,
+			PresencePenalty:  0.6,
 		}
 
 		// 判断配置文件是否存在，存在直接JSON读取
@@ -64,6 +66,9 @@ func LoadConfig() *Configuration {
 		Model := os.Getenv("MODEL")
 		MaxTokens := os.Getenv("MAX_TOKENS")
 		Temperature := os.Getenv("TEMPREATURE")
+		TopP := os.Getenv("TOP_P")
+		FrequencyPenalty := os.Getenv("FREQ")
+		PresencePenalty := os.Getenv("PRES")
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
 		}
@@ -87,6 +92,30 @@ func LoadConfig() *Configuration {
 				return
 			}
 			config.Temperature = temp
+		}
+		if TopP != "" {
+			temp, err := strconv.ParseFloat(TopP, 32)
+			if err != nil {
+				logger.Danger(fmt.Sprintf("config Temperature err: %v ,get is %v", err, TopP))
+				return
+			}
+			config.TopP = float32(temp)
+		}
+		if FrequencyPenalty != "" {
+			temp, err := strconv.ParseFloat(FrequencyPenalty, 32)
+			if err != nil {
+				logger.Danger(fmt.Sprintf("config Temperature err: %v ,get is %v", err, FrequencyPenalty))
+				return
+			}
+			config.FrequencyPenalty = float32(temp)
+		}
+		if PresencePenalty != "" {
+			temp, err := strconv.ParseFloat(PresencePenalty, 32)
+			if err != nil {
+				logger.Danger(fmt.Sprintf("config Temperature err: %v ,get is %v", err, PresencePenalty))
+				return
+			}
+			config.PresencePenalty = float32(temp)
 		}
 
 	})

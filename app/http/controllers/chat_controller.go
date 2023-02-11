@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/869413421/chatgpt/config"
+	"github.com/869413421/chatgpt/pkg/logger"
 	"github.com/gin-gonic/gin"
 	gogpt "github.com/sashabaranov/go-gpt3"
 	"net/http"
@@ -40,16 +41,20 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 		c.ResponseJson(ctx, http.StatusBadRequest, "request text is empty", nil)
 		return
 	}
+
 	cnf := config.LoadConfig()
 	client := gogpt.NewClient(cnf.ApiKey)
+	prompt := cnf.BotDesc + "\n" + question.Text
+	logger.Info("request prompt is %s", prompt)
 	req := gogpt.CompletionRequest{
 		Model:            cnf.Model,
 		MaxTokens:        cnf.MaxTokens,
-		TopP:             0.3,
-		FrequencyPenalty: 0.5,
-		PresencePenalty:  0.0,
-		Prompt:           cnf.BotDesc + "\n" + question.Text,
+		TopP:             cnf.TopP,
+		FrequencyPenalty: cnf.FrequencyPenalty,
+		PresencePenalty:  cnf.PresencePenalty,
+		Prompt:           prompt,
 	}
+
 	resp, err := client.CreateCompletion(ctx, req)
 	if err != nil {
 		c.ResponseJson(ctx, http.StatusInternalServerError, err.Error(), nil)

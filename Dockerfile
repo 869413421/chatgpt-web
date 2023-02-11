@@ -18,7 +18,7 @@ WORKDIR /app
 COPY . .
 
 # 下载依赖
-RUN go mod tidy && go mod download
+RUN go mod download
 
 # 构建二进制文件，添加来一些额外参数以便可以在 Alpine 中运行它
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o chatgpt-web

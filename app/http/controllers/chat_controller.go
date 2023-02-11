@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/869413421/chatgpt/config"
-	"github.com/869413421/chatgpt/pkg/logger"
+	"github.com/869413421/chatgpt-web/config"
+	"github.com/869413421/chatgpt-web/pkg/logger"
 	"github.com/gin-gonic/gin"
 	gogpt "github.com/sashabaranov/go-gpt3"
 	"net/http"

@@ -3,7 +3,7 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/869413421/chatgpt/pkg/logger"
+	"github.com/869413421/chatgpt-web/pkg/logger"
 	"log"
 	"os"
 	"strconv"

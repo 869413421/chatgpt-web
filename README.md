@@ -127,3 +127,6 @@ top_p: 使用温度采样的替代方法称为核心采样，其中模型考虑�
 frequency_penalty: 
 presence_penalty:
 ````
+### 有疑问请添加微信（备注: chatgpt-web），不定期通过解答
+
+**微信号 huangyanming681925**

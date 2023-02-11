@@ -37,6 +37,8 @@ RUN mkdir /app
 WORKDIR /app
 
 # 而是从上一个阶段构建的 builder容器中拉取
+ADD ./resources /app/resources
+ADD ./static /app/static
 COPY --from=builder /app/chatgpt-web .
 ADD supervisord.conf /etc/supervisord.conf
 ADD config.dev.json /app/config.dev.json

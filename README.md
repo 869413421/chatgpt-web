@@ -123,7 +123,7 @@ bot_desc：AI特征，非常重要，功能等同给与AI一个身份设定
 max_tokens: GPT响应字符数，最大2048，默认值512。max_tokens会影响接口响应速度，字符越大响应越慢。
 model: GPT选用模型，默认text-davinci-003，具体选项参考官网训练场
 temperature: GPT热度，0到1，默认0.9。数字越大创造力越强，但更偏离训练事实，越低越接近训练事实
-top_p: 
+top_p: 使用温度采样的替代方法称为核心采样，其中模型考虑具有top_p概率质量的令牌的结果。因此，0.1 意味着只考虑包含前 10% 概率质量的代币。
 frequency_penalty: 
 presence_penalty:
 ````

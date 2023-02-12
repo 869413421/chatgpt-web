@@ -23,6 +23,6 @@ jobs:
           goarch: ${{ matrix.goarch }}
           goversion: 1.16 # 可以指定编译使用的 Golang 版本
           binary_name: "chatgpt-web" # 可以指定二进制文件的名称
-          extra_files: README.md config.dev.json # 需要包含的额外文件
+          extra_files: ./resources ./static README.md config.dev.json # 需要包含的额外文件
           retry: 10
           overwrite: true

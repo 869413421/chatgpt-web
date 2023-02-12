@@ -83,7 +83,7 @@ $ docker run -itd --name chatgpt-web --restart=always \
  -e FREQ=0.0 \
  -e PRES=0.6 \
  -p 8080:8080 \
- docker.mirrors.sjtug.sjtu.edu.cn/qingshui869413421/chatgpt-web:latest
+ qingshui869413421/chatgpt-web:latest
 ```
 
 运行命令中映射的配置文件参考下边的配置文件说明。
@@ -95,7 +95,7 @@ $ docker run -itd --name chatgpt-web --restart=always \
 $ cp config.dev.json config.json  # 其中 config.dev.json 从项目的根目录获取
 
 # 运行项目
-$ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 8080:8080 docker.mirrors.sjtug.sjtu.edu.cn/qingshui869413421/chatgpt-web:latest
+$ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 8080:8080 qingshui869413421/chatgpt-web:latest
 ```
 
 其中配置文件参考下边的配置文件说明。

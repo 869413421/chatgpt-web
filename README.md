@@ -1,7 +1,7 @@
 # chatgpt-web
-[![Release](https://img.shields.io/github/v/release/869413421/chatgpt.svg?style=flat-square)](https://github.com/869413421/wechatbot/releases/tag/v1.1.3)
-![Github stars](https://img.shields.io/github/stars/869413421/chatgpt.svg)
-![Forks](https://img.shields.io/github/forks/869413421/chatgpt.svg?style=flat-square)
+[![Release](https://img.shields.io/github/v/release/869413421/chatgpt-web.svg?style=flat-square)](https://github.com/869413421/wechatbot/releases/tag/v1.1.3)
+![Github stars](https://img.shields.io/github/stars/869413421/chatgpt-web.svg)
+![Forks](https://img.shields.io/github/forks/869413421/chatgpt-web.svg?style=flat-square)
 > 本项目可以一键部署属于自己定制化的 chatgpt web程序，
 > 只需下载release中对应平台的项目文件，修改配置后执行，打开 http://127.0.0.1:8080 ，便可以获得属于自己的chatgpt网站。
 > 
@@ -30,7 +30,7 @@
 
 `第一种：直接下载二进制(适合对编程不了解的同学)`
 
-> 非技术人员请直接下载release中的[压缩包](https://github.com/869413421/wechatbot/releases) ，请根据自己系统以及架构选择合适的压缩包，下载之后直接解压运行。
+> 非技术人员请直接下载release中的[压缩包](https://github.com/869413421/chatgpt-web/releases) ，请根据自己系统以及架构选择合适的压缩包，下载之后直接解压运行。
 
 下载之后，在本地解压，即可看到可执行程序，与配置文件：
 

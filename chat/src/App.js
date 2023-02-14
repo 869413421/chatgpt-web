@@ -1,11 +1,11 @@
 import './App.css';
-import Chat, {Bubble, Progress, useMessages} from '@chatui/core';
+import Chat, {Bubble, Progress, toast, useMessages} from '@chatui/core';
 import '@chatui/core/dist/index.css';
 import '@chatui/core/es/styles/index.less';
 import React, {useEffect, useState} from 'react';
-import { toast } from '@chatui/core';
 import './chatui-theme.css';
 import axios from "axios";
+import ReactMarkdown from 'react-markdown'
 
 const defaultQuickReplies = [
     {
@@ -45,7 +45,7 @@ function App() {
 
     // clearQuestion 清空文本换行符号
     function clearReply(reply) {
-        reply = reply.replace(/\s/g, "");
+        // TODO 清洗回复特殊字符
         return reply
     }
 
@@ -73,13 +73,8 @@ function App() {
 
         switch (type) {
             case 'text':
-                return <Bubble content={content.text}/>;
-            case 'image':
-                return (
-                    <Bubble type="image">
-                        <img src={content.picUrl} alt=""/>
-                    </Bubble>
-                );
+                let text = content.text
+                return <Bubble><ReactMarkdown children={text}/></Bubble>;
             default:
                 return null;
         }
@@ -96,7 +91,9 @@ function App() {
         if (chatContext !== '') {
             question = chatContext + "\n" + question
         }
-        axios.post('completion',
+
+        let url = "completion"
+        axios.post(url,
             {
                 "text": question,
             }).then((response) => {
@@ -116,36 +113,6 @@ function App() {
         });
     }
 
-    function findInArr(arr, n) {
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] === n) return true;
-        }
-        return false;
-    };
-
-    function getByClass(oParent, sClass) {
-        if (document.getElementsByClassName) {
-            return oParent.getElementsByClassName(sClass);
-        } else {
-            var aEle = oParent.getElementsByTagName('*');
-            var arr = [];
-            for (var i = 0; i < aEle.length; i++) {
-                var tmp = aEle[i].className.split(' ');
-                if (findInArr(tmp, sClass)) {
-                    arr.push(aEle[i]);
-                }
-            }
-            return arr;
-        }
-    }
-
-    useEffect(() => {
-        var oUl = document.getElementById('root');
-        var aBox = getByClass(oUl, 'Input Input--outline Composer-input');
-        if (aBox.length > 0) {
-            aBox[0].focus();
-        }
-    })
     return (
         <div style={{height: 'calc(100vh - 10px)', marginTop: '-5px'}}>
             <Chat
@@ -164,7 +131,7 @@ function App() {
                             title: 'More',
                         },
                     ],
-                    title: '基于chatGPT的AI助手',
+                    title: '基于ChatGPT的AI助手',
                 }}
                 messages={messages}
                 renderMessageContent={renderMessageContent}

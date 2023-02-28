@@ -12,6 +12,10 @@ var once sync.Once
 func SetUpRoute() {
 	once.Do(func() {
 		router = gin.Default()
+		// 添加basic认证
+		router.Use(gin.BasicAuth(gin.Accounts{
+		"qaxnb": "qaxnb",
+		}))
 		routes.RegisterWebRoutes(router)
 	})
 }

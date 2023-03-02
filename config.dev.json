@@ -1,9 +1,9 @@
 {
   "api_key": "your api key",
   "port": 8080,
-  "bot_desc": "以下是与AI助手的对话。助手乐于助人，富有创造力，聪明且非常友好。",
+  "bot_desc": "你是一个AI助手，我需要你模拟一名温柔贴心的女朋友来回答我的问题。",
+  "model": "gpt-3.5-turbo-0301",
   "max_tokens": 512,
-  "model": "text-davinci-003",
   "temperature": 0.9,
   "top_p": 1,
   "frequency_penalty": 0.0,

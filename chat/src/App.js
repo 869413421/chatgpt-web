@@ -2,7 +2,7 @@ import './App.css';
 import Chat, {Bubble, Progress, toast, useMessages} from '@chatui/core';
 import '@chatui/core/dist/index.css';
 import '@chatui/core/es/styles/index.less';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './chatui-theme.css';
 import axios from "axios";
 import ReactMarkdown from 'react-markdown'
@@ -24,7 +24,7 @@ const initialMessages = [
     },
 ];
 
-let chatContext = "";
+let chatContext = [];
 
 function App() {
     const {messages, appendMsg, setTyping} = useMessages(initialMessages);
@@ -88,22 +88,25 @@ function App() {
 
     function onGenCode(question) {
         question = clearQuestion(question)
-        if (chatContext !== '') {
-            question = chatContext + "\n" + question
-        }
+        chatContext.push({
+            "role": "user",
+            "content": question,
+        })
+
 
         let url = "completion"
+        // url = "http://127.0.0.1:8080/completion"
         axios.post(url,
             {
-                "text": question,
+                "messages": chatContext,
             }).then((response) => {
-                let reply = clearReply(response.data.data)
+                let reply = clearReply(response.data.data.reply)
                 appendMsg({
                     type: 'text',
                     content: {text: reply},
                     user: {avatar: '//gitclone.com/download1/gitclone.png'},
                 });
-                chatContext = question + "\n" + reply
+                chatContext = response.data.data.messages
                 console.log(chatContext)
                 setPercentage(0);
             }

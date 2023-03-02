@@ -78,7 +78,7 @@ $ go run main.go
 # 运行项目，环境变量参考下方配置说明
 $ docker run -itd --name chatgpt-web --restart=always \
  -e APIKEY=换成你的key \
- -e MODEL=text-davinci-003 \
+ -e MODEL=gpt-3.5-turbo-0301 \
  -e MAX_TOKENS=512 \
  -e TEMPREATURE=0.9 \
  -e TOP_P=1 \

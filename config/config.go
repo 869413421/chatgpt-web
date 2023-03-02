@@ -38,7 +38,7 @@ func LoadConfig() *Configuration {
 		config = &Configuration{
 			MaxTokens:        60,
 			Port:             8080,
-			Model:            "text-davinci-003",
+			Model:            "gpt-3.5-turbo-0301",
 			Temperature:      0.9,
 			TopP:             1,
 			FrequencyPenalty: 0.0,

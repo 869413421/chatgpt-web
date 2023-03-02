@@ -69,6 +69,7 @@ func LoadConfig() *Configuration {
 		TopP := os.Getenv("TOP_P")
 		FrequencyPenalty := os.Getenv("FREQ")
 		PresencePenalty := os.Getenv("PRES")
+		BotDesc := os.Getenv("BOT_DESC")
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
 		}
@@ -76,6 +77,11 @@ func LoadConfig() *Configuration {
 		if Model != "" {
 			config.Model = Model
 		}
+
+		if BotDesc != "" {
+			config.BotDesc = BotDesc
+		}
+
 
 		if MaxTokens != "" {
 			max, err := strconv.Atoi(MaxTokens)

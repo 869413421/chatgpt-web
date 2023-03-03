@@ -1,4 +1,5 @@
 import './App.css'
+import css from './App.module.css'
 import Chat, {
   Bubble,
   MessageProps,
@@ -8,7 +9,7 @@ import Chat, {
 } from '@chatui/core'
 import '@chatui/core/dist/index.css'
 import '@chatui/core/es/styles/index.less'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './chatui-theme.css'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
@@ -127,7 +128,7 @@ function App() {
   }
 
   return (
-    <div style={{ height: 'calc(100vh - 10px)', marginTop: '-5px' }}>
+    <div className={css.app}>
       <Chat
         navbar={{
           leftContent: {

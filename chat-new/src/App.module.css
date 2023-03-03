@@ -1,0 +1,7 @@
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 5px;
+  /* box-sizing: border-box;
+  border: solid 8px red; */
+}

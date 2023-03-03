@@ -13,11 +13,17 @@ import { useState } from 'react'
 import './chatui-theme.css'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
+import clipboardy from 'clipboardy'
 
 const defaultQuickReplies = [
   {
     name: '清空会话',
     isNew: true,
+    isHighlight: true,
+  },
+  {
+    name: '复制会话',
+    isNew: false,
     isHighlight: true,
   },
 ]
@@ -91,9 +97,22 @@ function App() {
     }
   }
 
-  function handleQuickReplyClick(item: { name: string }) {
+  async function handleQuickReplyClick(item: { name: string }) {
     if (item.name === '清空会话') {
       window.location.reload()
+    }
+    if (item.name === '复制会话') {
+      if (messages.length <= 1) {
+        return
+      }
+      const r = messages
+        .slice(1)
+        .filter((it) => it.type === 'text')
+        .map((it) => it.content.text)
+        .join('\n')
+      console.log('messages', messages, r)
+      await clipboardy.write(r)
+      toast.success('复制成功', 10_000)
     }
   }
 

@@ -14,12 +14,12 @@
 > 
 > 详情参考官方详细[参数示例](https://beta.openai.com/examples)
 
-# 项目初衷
-> 自chatgpt流行以后，一直在使用其作为自己的编码工具。奈何官网时常在问题问到一半时短路，一些得到的答案就此丢失。
-> 为了解决这个问题，我选择了更加稳定的API套上客户端来作为自己的工具。定制化地做了一些功能，如存储提问记录，统计提问信息等一些功能，同时做上内网穿透提供给没有办法体验chatgpt的朋友使用，由此大大降低了使用门槛。
-> 当前项目是初始功能版本，开源出来给有需要的朋友使用。
+# 更新记录
+* 增加代理配置，解决国内无法使用。2023-03-04
 
 # 项目功能
+* 请求openai增加代理（防墙）
+* AI性格设定
 * 兼容3.0和3.5API
 * 基本问答界面
 * 参数可配置
@@ -27,6 +27,11 @@
 * 提问上下文
 # 使用前提
 > 有openai账号，并且创建好api_key，注册事项可以参考[此文章](https://juejin.cn/post/7173447848292253704) 。
+
+# 项目初衷
+> 自chatgpt流行以后，一直在使用其作为自己的编码工具。奈何官网时常在问题问到一半时短路，一些得到的答案就此丢失。
+> 为了解决这个问题，我选择了更加稳定的API套上客户端来作为自己的工具。定制化地做了一些功能，如存储提问记录，统计提问信息等一些功能，同时做上内网穿透提供给没有办法体验chatgpt的朋友使用，由此大大降低了使用门槛。
+> 当前项目是初始功能版本，开源出来给有需要的朋友使用。
 
 # 快速开始
 
@@ -85,6 +90,7 @@ $ docker run -itd --name chatgpt-web --restart=always \
  -e TOP_P=1 \
  -e FREQ=0.0 \
  -e PRES=0.6 \
+ -e PROXY=http://host.docker.internal:10809 \
  -p 8080:8080 \
  qingshui869413421/chatgpt-web:latest
 ```
@@ -111,9 +117,10 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 {
   "api_key": "your api key",
   "port": 8080,
-  "bot_desc": "以下是与AI助手的对话。助手乐于助人，富有创造力，聪明且非常友好。",
+  "bot_desc": "你是一个AI助手，我需要你模拟一名温柔贴心的女朋友来回答我的问题。",
+  "proxy": "http://host.docker.internal:10809",
+  "model": "gpt-3.5-turbo-0301",
   "max_tokens": 512,
-  "model": "text-davinci-003",
   "temperature": 0.9,
   "top_p": 1,
   "frequency_penalty": 0.0,
@@ -122,6 +129,7 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 
 api_key：openai api_key
 port: http服务端口
+proxy: openai请求代理，防墙。
 bot_desc：AI特征，非常重要，功能等同给与AI一个身份设定
 max_tokens: GPT响应字符数，最大2048，默认值512。max_tokens会影响接口响应速度，字符越大响应越慢。
 model: GPT选用模型，默认text-davinci-003，具体选项参考官网训练场

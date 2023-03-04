@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	gogpt "github.com/sashabaranov/go-gpt3"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -41,7 +42,24 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 	}
 
 	cnf := config.LoadConfig()
-	client := gogpt.NewClient(cnf.ApiKey)
+	gptConfig := gogpt.DefaultConfig(cnf.ApiKey)
+
+	if cnf.Proxy != "" {
+		// 创建一个 HTTP Transport 对象，并设置代理服务器
+		proxyUrl, err := url.Parse(cnf.Proxy)
+		if err != nil {
+			panic(err)
+		}
+		transport := &http.Transport{
+			Proxy: http.ProxyURL(proxyUrl),
+		}
+		// 创建一个 HTTP 客户端，并将 Transport 对象设置为其 Transport 字段
+		gptConfig.HTTPClient = &http.Client{
+			Transport: transport,
+		}
+	}
+
+	client := gogpt.NewClientWithConfig(gptConfig)
 	if request.Messages[0].Role != "system" {
 		newMessage := append([]gogpt.ChatCompletionMessage{
 			{Role: "system", Content: cnf.BotDesc},
@@ -66,7 +84,7 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 		for _, item := range request.Messages {
 			prompt += item.Content + "/n"
 		}
-		prompt = strings.Trim(prompt,"/n")
+		prompt = strings.Trim(prompt, "/n")
 
 		logger.Info("request prompt is %s", prompt)
 		req := gogpt.CompletionRequest{

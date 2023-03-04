@@ -14,9 +14,12 @@ import (
 type Configuration struct {
 	// gpt apikey
 	ApiKey string `json:"api_key"`
-	Port   int    `json:"port"`
-	//
+	// 服务端口
+	Port int `json:"port"`
+	// AI特征
 	BotDesc string `json:"bot_desc"`
+	// 代理
+	Proxy string `json:"proxy"`
 	// GPT请求最大字符数
 	MaxTokens int `json:"max_tokens"`
 	// GPT模型
@@ -70,8 +73,12 @@ func LoadConfig() *Configuration {
 		FrequencyPenalty := os.Getenv("FREQ")
 		PresencePenalty := os.Getenv("PRES")
 		BotDesc := os.Getenv("BOT_DESC")
+		Proxy := os.Getenv("PROXY")
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
+		}
+		if Proxy != "" {
+			config.Proxy = Proxy
 		}
 
 		if Model != "" {
@@ -81,7 +88,6 @@ func LoadConfig() *Configuration {
 		if BotDesc != "" {
 			config.BotDesc = BotDesc
 		}
-
 
 		if MaxTokens != "" {
 			max, err := strconv.Atoi(MaxTokens)
@@ -123,7 +129,6 @@ func LoadConfig() *Configuration {
 			}
 			config.PresencePenalty = float32(temp)
 		}
-
 	})
 	if config.ApiKey == "" {
 		logger.Danger("config err: api key required")

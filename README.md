@@ -92,6 +92,8 @@ $ docker run -itd --name chatgpt-web --restart=always \
  -e FREQ=0.0 \
  -e PRES=0.6 \
  -e PROXY=http://host.docker.internal:10809 \
+ -e AUTH_USER= \
+ -e AUTH_PASSWORD= \
  -p 8080:8080 \
  qingshui869413421/chatgpt-web:latest
 ```
@@ -125,7 +127,9 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
   "temperature": 0.9,
   "top_p": 1,
   "frequency_penalty": 0.0,
-  "presence_penalty": 0.6
+  "presence_penalty": 0.6,
+  "auth_user": "",
+  "auth_password": ""
 }
 
 api_key：openai api_key
@@ -138,6 +142,8 @@ temperature: GPT热度，0到1，默认0.9。数字越大创造力越强，但�
 top_p: 使用温度采样的替代方法称为核心采样，其中模型考虑具有top_p概率质量的令牌的结果。因此，0.1 意味着只考虑包含前 10% 概率质量的代币。
 frequency_penalty: 
 presence_penalty:
+auth_user": http基本认证用户名(空表示不开启验证)
+auth_password": http基本认证密码
 ````
 
 # 免责声明 Disclaimers

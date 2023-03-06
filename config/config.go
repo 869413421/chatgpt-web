@@ -3,11 +3,12 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/869413421/chatgpt-web/pkg/logger"
 	"log"
 	"os"
 	"strconv"
 	"sync"
+
+	"github.com/869413421/chatgpt-web/pkg/logger"
 )
 
 // Configuration 项目配置
@@ -29,6 +30,8 @@ type Configuration struct {
 	TopP             float32 `json:"top_p"`
 	PresencePenalty  float32 `json:"presence_penalty"`
 	FrequencyPenalty float32 `json:"frequency_penalty"`
+	AuthUser         string  `json:"auth_user"`     // 账号，默认空不验证
+	AuthPassword     string  `json:"auth_password"` // 密码
 }
 
 var config *Configuration
@@ -74,6 +77,8 @@ func LoadConfig() *Configuration {
 		PresencePenalty := os.Getenv("PRES")
 		BotDesc := os.Getenv("BOT_DESC")
 		Proxy := os.Getenv("PROXY")
+		AuthUser := os.Getenv("AUTH_USER")
+		AuthPassword := os.Getenv("AUTH_PASSWORD")
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
 		}
@@ -128,6 +133,13 @@ func LoadConfig() *Configuration {
 				return
 			}
 			config.PresencePenalty = float32(temp)
+		}
+		if AuthUser != "" {
+			config.AuthUser = AuthUser
+		}
+
+		if AuthPassword != "" {
+			config.AuthPassword = AuthPassword
 		}
 	})
 	if config.ApiKey == "" {

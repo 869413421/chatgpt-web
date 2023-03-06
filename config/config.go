@@ -77,6 +77,8 @@ func LoadConfig() *Configuration {
 		PresencePenalty := os.Getenv("PRES")
 		BotDesc := os.Getenv("BOT_DESC")
 		Proxy := os.Getenv("PROXY")
+		AuthUser := os.Getenv("AUTH_USER")
+		AuthPassword := os.Getenv("AUTH_PASSWORD")
 		if ApiKey != "" {
 			config.ApiKey = ApiKey
 		}
@@ -131,6 +133,13 @@ func LoadConfig() *Configuration {
 				return
 			}
 			config.PresencePenalty = float32(temp)
+		}
+		if AuthUser != "" {
+			config.AuthUser = AuthUser
+		}
+
+		if AuthPassword != "" {
+			config.AuthPassword = AuthPassword
 		}
 	})
 	if config.ApiKey == "" {

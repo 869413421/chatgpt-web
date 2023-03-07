@@ -4,14 +4,14 @@
 ![Forks](https://img.shields.io/github/forks/869413421/chatgpt-web.svg?style=flat-square)
 > 本项目可以一键部署属于自己定制化的 chatgpt web 程序(兼容gpt3.5)，
 > 只需下载release中对应平台的项目文件，修改配置后执行，打开 http://127.0.0.1:8080 ，便可以获得属于自己的chatgpt网站。
-> 
+>
 > 参考项目：[codegen](https://github.com/git-cloner/codegen)
 
 > 项目当前默认为示例中AI聊天机器人参数，可以根据自己需求定制化。
-> 
+>
 > **注意，每个参数都可能影响你得到不一样的聊天效果,改变一个参数你就可能得到另一种回答，所以请自己尝试去调试，不要上来就抱怨人工智障。文档中有二十多中参数示例，如AI聊天机器人
 > ，产品名称生成，python代码修复器等等等...**
-> 
+>
 > 详情参考官方详细[参数示例](https://beta.openai.com/examples)
 
 # 更新记录
@@ -95,8 +95,11 @@ $ docker run -itd --name chatgpt-web --restart=always \
  -e AUTH_USER= \
  -e AUTH_PASSWORD= \
  -p 8080:8080 \
+ --add-host="host.docker.internal:host-gateway"
  qingshui869413421/chatgpt-web:latest
 ```
+
+`注意`：`host.docker.internal`会指向容器所在宿主机的IP，因此只需要更改端口为你的代理端口即可。
 
 运行命令中映射的配置文件参考下边的配置文件说明。
 
@@ -140,7 +143,7 @@ max_tokens: GPT响应字符数，最大2048，默认值512。max_tokens会影响
 model: GPT选用模型，默认text-davinci-003，具体选项参考官网训练场
 temperature: GPT热度，0到1，默认0.9。数字越大创造力越强，但更偏离训练事实，越低越接近训练事实
 top_p: 使用温度采样的替代方法称为核心采样，其中模型考虑具有top_p概率质量的令牌的结果。因此，0.1 意味着只考虑包含前 10% 概率质量的代币。
-frequency_penalty: 
+frequency_penalty:
 presence_penalty:
 auth_user": http基本认证用户名(空表示不开启验证)
 auth_password": http基本认证密码

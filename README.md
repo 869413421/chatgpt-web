@@ -15,8 +15,10 @@
 > 详情参考官方详细[参数示例](https://beta.openai.com/examples)
 
 # 更新记录
-* 修改为默认不开启代理。2023-03-06
-* 增加代理配置，解决国内无法使用。2023-03-04
+- [x] feat: 增加docker-compose.yaml。2023-03-08
+- [x] fix: 修复basic auth 。 2023-03-08
+- [x] feat：修改为默认不开启代理。2023-03-06
+- [x] feat：增加代理配置，解决国内无法使用。2023-03-04
 
 # 项目功能
 * 请求openai增加代理（防墙）
@@ -95,7 +97,7 @@ $ docker run -itd --name chatgpt-web --restart=always \
  -e AUTH_USER= \
  -e AUTH_PASSWORD= \
  -p 8080:8080 \
- --add-host="host.docker.internal:host-gateway"
+ --add-host="host.docker.internal:host-gateway" \
  qingshui869413421/chatgpt-web:latest
 ```
 
@@ -115,6 +117,9 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 
 其中配置文件参考下边的配置文件说明。
 
+# 使用docker-docompose 运行
+
+``docker compose up -d``
 
 
 # 配置文件说明

@@ -128,6 +128,7 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 {
   "api_key": "your api key",
   "port": 8080,
+  "listen": "",
   "bot_desc": "你是一个AI助手，我需要你模拟一名温柔贴心的女朋友来回答我的问题。",
   "proxy": "http://host.docker.internal:10809",
   "model": "gpt-3.5-turbo-0301",
@@ -142,6 +143,7 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 
 api_key：openai api_key
 port: http服务端口
+listen: http服务监听地址，不填默认监听0.0.0.0
 proxy: openai请求代理，防墙。
 bot_desc：AI特征，非常重要，功能等同给与AI一个身份设定
 max_tokens: GPT响应字符数，最大2048，默认值512。max_tokens会影响接口响应速度，字符越大响应越慢。

@@ -17,6 +17,8 @@ type Configuration struct {
 	ApiKey string `json:"api_key"`
 	// 服务端口
 	Port int `json:"port"`
+	// 监听接口
+	Listen string `json:"listen"`
 	// AI特征
 	BotDesc string `json:"bot_desc"`
 	// 代理
@@ -44,6 +46,7 @@ func LoadConfig() *Configuration {
 		config = &Configuration{
 			MaxTokens:        60,
 			Port:             8080,
+			Listen:           "",
 			Model:            "gpt-3.5-turbo-0301",
 			Temperature:      0.9,
 			TopP:             1,
@@ -145,6 +148,7 @@ func LoadConfig() *Configuration {
 	if config.ApiKey == "" {
 		logger.Danger("config err: api key required")
 	}
+
 
 	return config
 }

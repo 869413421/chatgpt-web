@@ -16,7 +16,9 @@ func StartWebServer() {
 	// 启动服务
 	port := config.LoadConfig().Port
 	portString := strconv.Itoa(port)
-	err := router.Run(":" + portString)
+	// 自定义监听地址
+	listen := config.LoadConfig().Listen
+	err := router.Run(listen + ":" + portString)
 	if err != nil {
 		logger.Danger("run webserver error %s", err)
 		return

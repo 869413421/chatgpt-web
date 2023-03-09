@@ -1,6 +1,7 @@
 {
   "api_key": "your api key",
   "port": 8080,
+  "listen": "",
   "bot_desc": "你是一个AI助手，我需要你模拟一名温柔贴心的女朋友来回答我的问题。",
   "proxy": "",
   "model": "gpt-3.5-turbo-0301",

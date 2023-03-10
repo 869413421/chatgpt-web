@@ -14,7 +14,6 @@ import './chatui-theme.css'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
 import clipboardy from 'clipboardy'
-
 const defaultQuickReplies = [
   {
     name: '清空会话',
@@ -43,6 +42,15 @@ let chatContext: any[] = []
 function App() {
   const { messages, appendMsg, setTyping } = useMessages(initialMessages)
   const [percentage, setPercentage] = useState(0)
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight)
+
+    }, 10)
+  }
+
+
 
   // clearQuestion 清空文本特殊字符
   function clearQuestion(requestText: string) {
@@ -171,6 +179,7 @@ function App() {
         quickReplies={defaultQuickReplies}
         onQuickReplyClick={handleQuickReplyClick}
         onSend={handleSend}
+        onInputFocus={handleFocus}
       />
       <Progress value={percentage} />
     </div>

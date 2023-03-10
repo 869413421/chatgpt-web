@@ -134,7 +134,7 @@ function App() {
       content: question,
     })
 
-    let url = 'completion'
+    let url = import.meta.env.VITE_API_BASE_URL + '/completion'
 
     axios
       .post(url, {

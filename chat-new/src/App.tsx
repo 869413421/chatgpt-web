@@ -40,7 +40,7 @@ const initialMessages = [
 let chatContext: any[] = []
 
 function App() {
-  const { messages, appendMsg, setTyping } = useMessages(initialMessages)
+  const { messages, appendMsg, setTyping, prependMsgs } = useMessages(initialMessages)
   const [percentage, setPercentage] = useState(0)
 
   const handleFocus = () => {
@@ -107,7 +107,10 @@ function App() {
 
   async function handleQuickReplyClick(item: { name: string }) {
     if (item.name === '清空会话') {
-      window.location.reload()
+
+      chatContext.splice(0)
+      messages.splice(0)
+      prependMsgs(messages)
     }
     if (item.name === '复制会话') {
       if (messages.length <= 1) {
@@ -132,7 +135,7 @@ function App() {
     })
 
     let url = 'completion'
-    // url = "http://127.0.0.1:8080/completion"
+
     axios
       .post(url, {
         messages: chatContext,

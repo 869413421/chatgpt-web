@@ -15,6 +15,7 @@ import axios from 'axios'
 import clipboardy from 'clipboardy'
 import MdEditor from "md-editor-rt"
 import "md-editor-rt/lib/style.css"
+
 const defaultQuickReplies = [
   {
     name: '清空会话',
@@ -41,8 +42,16 @@ const initialMessages = [
 let chatContext: any[] = []
 
 function App() {
-  const { messages, appendMsg, setTyping } = useMessages(initialMessages)
+  const { messages, appendMsg, setTyping, prependMsgs } = useMessages(initialMessages)
   const [percentage, setPercentage] = useState(0)
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight)
+
+    }, 10)
+  }
+
 
   // clearQuestion 清空文本特殊字符
   function clearQuestion(requestText: string) {
@@ -101,7 +110,10 @@ function App() {
 
   async function handleQuickReplyClick(item: { name: string }) {
     if (item.name === '清空会话') {
-      window.location.reload()
+
+      chatContext.splice(0)
+      messages.splice(0)
+      prependMsgs(messages)
     }
     if (item.name === '复制会话') {
       if (messages.length <= 1) {
@@ -126,7 +138,7 @@ function App() {
     })
 
     let url = 'completion'
-    // url = "http://127.0.0.1:8080/completion"
+
     axios
       .post(url, {
         messages: chatContext,
@@ -173,6 +185,7 @@ function App() {
         quickReplies={defaultQuickReplies}
         onQuickReplyClick={handleQuickReplyClick}
         onSend={handleSend}
+        onInputFocus={handleFocus}
       />
       <Progress value={percentage} />
     </div>

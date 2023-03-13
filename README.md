@@ -15,6 +15,8 @@
 > 详情参考官方详细[参数示例](https://beta.openai.com/examples)
 
 # 更新记录
+- [x] fix: 修复前端部分BUG，优化富文本代码格式。 2023-03-13
+- [x] feat: 增加socsk5代理的支持，命令行参数配置。2023-03-13
 - [x] feat: 增加docker-compose.yaml。2023-03-08
 - [x] fix: 修复basic auth 。 2023-03-08
 - [x] feat：修改为默认不开启代理。2023-03-06

@@ -1,13 +1,19 @@
 package controllers
 
 import (
+	"context"
+	"net"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
+
+	"golang.org/x/net/proxy"
+
 	"github.com/869413421/chatgpt-web/config"
 	"github.com/869413421/chatgpt-web/pkg/logger"
 	"github.com/gin-gonic/gin"
 	gogpt "github.com/sashabaranov/go-gpt3"
-	"net/http"
-	"net/url"
-	"strings"
 )
 
 // ChatController 首页控制器
@@ -20,14 +26,14 @@ func NewChatController() *ChatController {
 	return &ChatController{}
 }
 
-//Index 首页
+// Index 首页
 func (c *ChatController) Index(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "index.html", gin.H{
 		"title": "Main website",
 	})
 }
 
-//Completion 回复
+// Completion 回复
 func (c *ChatController) Completion(ctx *gin.Context) {
 	var request gogpt.ChatCompletionRequest
 	err := ctx.BindJSON(&request)
@@ -45,18 +51,28 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 	gptConfig := gogpt.DefaultConfig(cnf.ApiKey)
 
 	if cnf.Proxy != "" {
-		// 创建一个 HTTP Transport 对象，并设置代理服务器
-		proxyUrl, err := url.Parse(cnf.Proxy)
-		if err != nil {
-			panic(err)
-		}
-		transport := &http.Transport{
-			Proxy: http.ProxyURL(proxyUrl),
+		transport := &http.Transport{}
+
+		if strings.HasPrefix(cnf.Proxy, "socks5h://") {
+			// 创建一个 DialContext 对象，并设置代理服务器
+			dialContext, err := newDialContext(cnf.Proxy[10:])
+			if err != nil {
+				panic(err)
+			}
+			transport.DialContext = dialContext
+		} else {
+			// 创建一个 HTTP Transport 对象，并设置代理服务器
+			proxyUrl, err := url.Parse(cnf.Proxy)
+			if err != nil {
+				panic(err)
+			}
+			transport.Proxy = http.ProxyURL(proxyUrl)
 		}
 		// 创建一个 HTTP 客户端，并将 Transport 对象设置为其 Transport 字段
 		gptConfig.HTTPClient = &http.Client{
 			Transport: transport,
 		}
+
 	}
 
 	client := gogpt.NewClientWithConfig(gptConfig)
@@ -111,4 +127,44 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 		})
 	}
 
+}
+
+type dialContextFunc func(ctx context.Context, network, address string) (net.Conn, error)
+
+func newDialContext(socks5 string) (dialContextFunc, error) {
+	baseDialer := &net.Dialer{
+		Timeout:   60 * time.Second,
+		KeepAlive: 60 * time.Second,
+	}
+
+	if socks5 != "" {
+		// split socks5 proxy string [username:password@]host:port
+		var auth *proxy.Auth = nil
+
+		if strings.Contains(socks5, "@") {
+			proxyInfo := strings.SplitN(socks5, "@", 2)
+			proxyUser := strings.Split(proxyInfo[0], ":")
+			if len(proxyUser) == 2 {
+				auth = &proxy.Auth{
+					User:     proxyUser[0],
+					Password: proxyUser[1],
+				}
+			}
+			socks5 = proxyInfo[1]
+		}
+
+		dialSocksProxy, err := proxy.SOCKS5("tcp", socks5, auth, baseDialer)
+		if err != nil {
+			return nil, err
+		}
+
+		contextDialer, ok := dialSocksProxy.(proxy.ContextDialer)
+		if !ok {
+			return nil, err
+		}
+
+		return contextDialer.DialContext, nil
+	} else {
+		return baseDialer.DialContext, nil
+	}
 }

@@ -12,8 +12,10 @@ import '@chatui/core/es/styles/index.less'
 import { useState } from 'react'
 import './chatui-theme.css'
 import axios from 'axios'
-import ReactMarkdown from 'react-markdown'
 import clipboardy from 'clipboardy'
+import MdEditor from "md-editor-rt"
+import "md-editor-rt/lib/style.css"
+
 const defaultQuickReplies = [
   {
     name: '清空会话',
@@ -31,7 +33,7 @@ const initialMessages = [
   {
     type: 'text',
     content: {
-      text: '您好，我是AI助理，开源于：https://github.com/869413421/chatgpt-web。',
+      text: '您好，我是AI助理',
     },
     user: { avatar: '//gitclone.com/download1/gitclone.png' },
   },
@@ -49,7 +51,6 @@ function App() {
 
     }, 10)
   }
-
 
 
   // clearQuestion 清空文本特殊字符
@@ -96,9 +97,11 @@ function App() {
       case 'text':
         let text = content.text
         return (
-          <Bubble>
-            <ReactMarkdown children={text} />
-          </Bubble>
+            <Bubble><MdEditor
+                style={{float: 'left'}}
+                modelValue = { text } // 要展示的markdown字符串
+                previewOnly = { true } // 只展示预览框部分
+             ></MdEditor></Bubble>
         )
       default:
         return null
@@ -134,7 +137,7 @@ function App() {
       content: question,
     })
 
-    let url = import.meta.env.VITE_API_BASE_URL + '/completion'
+    let url = 'completion'
 
     axios
       .post(url, {

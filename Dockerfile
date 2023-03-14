@@ -17,6 +17,9 @@ WORKDIR /app
 # 将当前项目所在目录代码拷贝到镜像中
 COPY . .
 
+# 更新依赖
+RUN go mod tidy
+
 # 下载依赖
 RUN go mod download
 

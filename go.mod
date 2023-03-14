@@ -1,6 +1,6 @@
 module github.com/869413421/chatgpt-web
 
-go 1.16
+go 1.17
 
 require (
 	github.com/alecthomas/kong v0.7.1

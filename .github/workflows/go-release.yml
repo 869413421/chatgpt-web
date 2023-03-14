@@ -26,3 +26,4 @@ jobs:
           extra_files: ./resources ./static README.md config.dev.json # 需要包含的额外文件
           retry: 10
           overwrite: true
+          pre_command: go mod tidy && go mod download

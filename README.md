@@ -88,6 +88,7 @@ $ go run main.go
 # 运行项目，环境变量参考下方配置说明
 $ docker run -itd --name chatgpt-web --restart=always \
  -e APIKEY=换成你的key \
+ -e APIURL= \
  -e MODEL=gpt-3.5-turbo-0301 \
  -e BOT_DESC=你是一个AI助手,我需要你模拟一名温柔贴心的女朋友来回答我的问题. \
  -e MAX_TOKENS=512 \
@@ -129,6 +130,7 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 ```json
 {
   "api_key": "your api key",
+  "api_url": "",
   "port": 8080,
   "listen": "",
   "bot_desc": "你是一个AI助手，我需要你模拟一名温柔贴心的女朋友来回答我的问题。",
@@ -146,9 +148,10 @@ $ docker run -itd --name chatgpt-web -v `pwd`/config.json:/app/config.json -p 80
 
 ````
 api_key：openai api_key
+api_url: openai api接口地址 不填使用默认 https://api.openai.com/v1 注，该服务的提供者可以看到你的明文请求(包括你在OpenAI的key)，建议自建或使用可信来源
 port: http服务端口
 listen: http服务监听地址，不填默认监听0.0.0.0
-proxy: openai请求代理，防墙。
+proxy: openai请求代理，防墙。 例如 http://127.0.0.1:7890 socks5://127.0.0.1:7890
 bot_desc：AI特征，非常重要，功能等同给与AI一个身份设定
 max_tokens: GPT响应字符数，最大2048，默认值512。max_tokens会影响接口响应速度，字符越大响应越慢。
 model: GPT选用模型，默认text-davinci-003，具体选项参考官网训练场

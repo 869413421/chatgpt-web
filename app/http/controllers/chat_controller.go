@@ -75,6 +75,11 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 
 	}
 
+	// 自定义gptConfig.BaseURL
+	if cnf.ApiURL != "" {
+		gptConfig.BaseURL = cnf.ApiURL
+	}
+
 	client := gogpt.NewClientWithConfig(gptConfig)
 	if request.Messages[0].Role != "system" {
 		newMessage := append([]gogpt.ChatCompletionMessage{

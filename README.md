@@ -264,6 +264,19 @@ WantedBy=multi-user.target
 
 可以使用`journalctl --unit chatgpt-web.service`查看程序日志。
 
+# 使用 [Zeabur](https://zeabur.com) 部署
+- 第一步，Fork 此项目。
+  <img src="./static/deploy-zeabur/fork.png"/>
+- 第二步，在 [Zeabur 的控制台](https://dash.zeabur.com) 新建一个服务，选择从源代码导入，搜索刚刚 Fork 的仓库，点击 Deploy
+  <img src="./static/deploy-zeabur/import.png"/>
+  <img src="./static/deploy-zeabur/deploy.png"/>
+- 第三步，配置环境变量。在 Variable 选项卡中，新增一个变量，key 为 APIKEY ，value 为你的 Openai 的 api key
+  <img src="./static/deploy-zeabur/variable.png"/>
+- 第四步，添加域名。在 Domain 选项卡中，为你的服务添加一个域名即可访问。
+  <img src="./static/deploy-zeabur/domain.png"/>
+  
+  
+
 # 免责声明 Disclaimers
 The code is for demo and testing only. 代码仅用于演示和测试。
 

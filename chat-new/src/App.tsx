@@ -15,6 +15,7 @@ import axios from 'axios'
 import clipboardy from 'clipboardy'
 import MdEditor from "md-editor-rt"
 import "md-editor-rt/lib/style.css"
+import sanitizeHtml from 'sanitize-html';
 
 const defaultQuickReplies = [
   {
@@ -96,13 +97,21 @@ function App() {
     switch (type) {
       case 'text':
         let text = content.text
-        return (
-            <Bubble><MdEditor
-                style={{float: 'left'}}
-                modelValue = { text } // 要展示的markdown字符串
-                previewOnly = { true } // 只展示预览框部分
-             ></MdEditor></Bubble>
-        )
+        let isHtml = sanitizeHtml(text) !== text;
+        if(isHtml){
+          return (
+              <Bubble><MdEditor
+                  style={{float: 'left'}}
+                  modelValue = { text } // 要展示的markdown字符串
+                  previewOnly = { true } // 只展示预览框部分
+              ></MdEditor></Bubble>
+          )
+        }else{
+          return (
+              <Bubble>{text}</Bubble>
+          )
+        }
+
       default:
         return null
     }

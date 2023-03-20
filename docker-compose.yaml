@@ -7,6 +7,7 @@ services:
     environment:
       TZ: Asia/Shanghai
       APIKEY: "your api key" #APIKEY
+      APIURL: "" #自定义API接口
       MODEL: "gpt-3.5-turbo-0301" #模型
       BOT_DESC: "你是一个AI助手,我需要你模拟一名温柔贴心的女朋友来回答我的问题." #ai设定
       MAX_TOKENS: 512

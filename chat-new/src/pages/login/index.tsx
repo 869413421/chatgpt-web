@@ -22,8 +22,8 @@ const Login = () => {
   const submitLogin = async () => {
     if (loginForm.username !== "" && loginForm.password !== "") {
       const res = await login(loginForm);
-      if (res.data.code === 0) {
-        setCookie("mojolicious", res.data.cookies, 3);
+      if (res.data.code === 200) {
+        setCookie("mojolicious", res.data.data.token, 3);
         navigate("/");
       } else {
         return toast.show("账号或密码错误", undefined);

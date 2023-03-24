@@ -57,13 +57,12 @@ const rootLoader = async () => {
   // console.log('页面加载前请求用户信息')
   // 这里用假的接口模拟下
   const res = await getUserInfo();
-  const { permissionRoutes, name, code } = res.data;
-  // 假设20001代表登陆过期
-  if (code === 20001) {
+  if (res.status == 401){
     return redirect("/login");
   }
+  const { info, permissionRoutes } = res.data.data;
   return {
-    name,
+    info,
     permissionRoutes,
   };
 };

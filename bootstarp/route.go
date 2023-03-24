@@ -1,4 +1,4 @@
-package bootstarp
+package bootstrap
 
 import (
 	"github.com/869413421/chatgpt-web/routes"

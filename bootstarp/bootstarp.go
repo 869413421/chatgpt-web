@@ -1,4 +1,4 @@
-package bootstarp
+package bootstrap
 
 import (
 	"github.com/869413421/chatgpt-web/config"
@@ -10,6 +10,7 @@ import (
 func StartWebServer() {
 	// 注册启动所需各类参数
 	SetUpRoute()
+	SetupDB()
 	initTemplateDir()
 	initStaticServer()
 
@@ -33,8 +34,8 @@ func initTemplateDir() {
 // initStaticServer 初始化静态文件处理
 func initStaticServer() {
 	router.StaticFS("/assets", http.Dir("static/assets"))
-	router.StaticFile("logo192.png","static/logo192.png")
-	router.StaticFile("logo512.png","static/logo512.png")
-	router.StaticFile("favicon.ico","static/favicon.ico")
-	router.StaticFile("manifest.json","static/manifest.json")
+	router.StaticFile("logo192.png", "static/logo192.png")
+	router.StaticFile("logo512.png", "static/logo512.png")
+	router.StaticFile("favicon.ico", "static/favicon.ico")
+	router.StaticFile("manifest.json", "static/manifest.json")
 }

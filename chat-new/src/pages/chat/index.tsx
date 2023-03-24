@@ -16,6 +16,8 @@ import clipboardy from 'clipboardy'
 import MdEditor from "md-editor-rt"
 import "md-editor-rt/lib/style.css"
 import sanitizeHtml from 'sanitize-html';
+import {completion, login} from '../../services/port'
+import {setCookie} from "../../utils/cookie";
 
 const defaultQuickReplies = [
   {
@@ -139,34 +141,30 @@ function App() {
     }
   }
 
-  function onGenCode(question: string) {
+  async function onGenCode(question: string) {
     question = clearQuestion(question)
     chatContext.push({
       role: 'user',
       content: question,
     })
 
-    let url = 'completion'
 
-    axios
-      .post(url, {
-        messages: chatContext,
+    const res = await completion(chatContext);
+    if (res.data.code === 200) {
+      let reply = clearReply(res.data.data.reply)
+      appendMsg({
+        type: 'text',
+        content: { text: reply },
+        user: { avatar: '//gitclone.com/download1/gitclone.png' },
       })
-      .then((response) => {
-        let reply = clearReply(response.data.data.reply)
-        appendMsg({
-          type: 'text',
-          content: { text: reply },
-          user: { avatar: '//gitclone.com/download1/gitclone.png' },
-        })
-        chatContext = response.data.data.messages
-        console.log(chatContext)
-        setPercentage(0)
-      })
-      .catch((err) => {
-        // 错误处理
-        toast.fail('请求出错，' + err.response.data.errorMsg)
-      })
+      chatContext = res.data.data.messages
+      console.log(chatContext)
+      setPercentage(0)
+
+    } else {
+      toast.fail('请求出错，' + res.data.data.errorMsg)
+      return toast.show("账号或密码错误", undefined);
+    }
   }
 
   return (

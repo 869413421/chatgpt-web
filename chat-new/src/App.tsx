@@ -42,6 +42,8 @@ const initialMessages = [
 
 let chatContext: any[] = []
 
+let placeholder = '请输入...'
+
 function App() {
   const { messages, appendMsg, setTyping, prependMsgs } = useMessages(initialMessages)
   const [percentage, setPercentage] = useState(0)
@@ -123,6 +125,7 @@ function App() {
       chatContext.splice(0)
       messages.splice(0)
       prependMsgs(messages)
+      placeholder = '请输入...'
     }
     if (item.name === '复制会话') {
       if (messages.length <= 1) {
@@ -162,6 +165,8 @@ function App() {
         chatContext = response.data.data.messages
         console.log(chatContext)
         setPercentage(0)
+        let token = response.data.data.max_token - response.data.data.total_token
+        placeholder = `请继续输入，本次会话还剩余 ${token} 个字`;
       })
       .catch((err) => {
         // 错误处理
@@ -195,6 +200,7 @@ function App() {
         onQuickReplyClick={handleQuickReplyClick}
         onSend={handleSend}
         onInputFocus={handleFocus}
+        placeholder={placeholder}
       />
       <Progress value={percentage} />
     </div>

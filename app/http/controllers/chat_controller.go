@@ -97,8 +97,10 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 			return
 		}
 		c.ResponseJson(ctx, http.StatusOK, "", gin.H{
-			"reply":    resp.Choices[0].Message.Content,
-			"messages": append(request.Messages, resp.Choices[0].Message),
+			"reply":       resp.Choices[0].Message.Content,
+			"messages":    append(request.Messages, resp.Choices[0].Message),
+			"total_token": resp.Usage.TotalTokens,
+			"max_token":   cnf.MaxTokens,
 		})
 	} else {
 		prompt := ""
@@ -129,6 +131,8 @@ func (c *ChatController) Completion(ctx *gin.Context) {
 				Role:    "assistant",
 				Content: resp.Choices[0].Text,
 			}),
+			"total_token": resp.Usage.TotalTokens,
+			"max_token":   cnf.MaxTokens,
 		})
 	}
 

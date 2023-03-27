@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Navigate, redirect } from "react-router-dom";
+import {createBrowserRouter, createMemoryRouter, Navigate, redirect} from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { getUserInfo } from "../services/port";
@@ -95,4 +95,4 @@ const routerConfig: RouteObject[] = [
   },
 ];
 
-export const routes = createBrowserRouter(routerConfig);
+export const routes = createMemoryRouter(routerConfig);

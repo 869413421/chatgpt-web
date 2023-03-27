@@ -11,13 +11,11 @@ import Chat, {
 import '@chatui/core/dist/index.css'
 import '@chatui/core/es/styles/index.less'
 import { useState } from 'react'
-import axios from 'axios'
 import clipboardy from 'clipboardy'
 import MdEditor from "md-editor-rt"
 import "md-editor-rt/lib/style.css"
 import sanitizeHtml from 'sanitize-html';
-import {completion, login} from '../../services/port'
-import {setCookie} from "../../utils/cookie";
+import {completion} from '../../services/port'
 
 const defaultQuickReplies = [
   {
@@ -100,7 +98,9 @@ function App() {
       case 'text':
         let text = content.text
         let isHtml = sanitizeHtml(text) !== text;
-        if(isHtml){
+        const richTextRegex = /(<[^>]+>)|(```[^`]*```)/gi;
+        const isRichText = richTextRegex.test(text);
+        if(isHtml || isRichText){
           return (
               <Bubble><MdEditor
                   style={{float: 'left'}}

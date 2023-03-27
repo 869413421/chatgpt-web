@@ -26,5 +26,4 @@ jobs:
           extra_files: ./resources ./static README.md config.dev.json # 需要包含的额外文件
           retry: 10
           overwrite: true
-          pre_command: go mod tidy && go mod download
-          build_command: CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o chatgpt-web
+          pre_command: go mod tidy && go mod download && export CGO_ENABLED=1

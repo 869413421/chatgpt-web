@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-
 	kong.Parse(&config.CLI)
-	bootstarp.StartWebServer()
+	bootstrap.StartWebServer()
 }

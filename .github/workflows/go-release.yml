@@ -27,3 +27,4 @@ jobs:
           retry: 10
           overwrite: true
           pre_command: go mod tidy && go mod download
+          build_command: CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o chatgpt-web

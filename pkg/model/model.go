@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"gorm.io/driver/sqlite"
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	gloger "gorm.io/gorm/logger"
 

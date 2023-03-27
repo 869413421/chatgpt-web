@@ -26,5 +26,5 @@ jobs:
           extra_files: ./resources ./static README.md config.dev.json # 需要包含的额外文件
           retry: 10
           overwrite: true
-          pre_command: "apt-get update && apt-get install --no-install-recommends -y gcc-mingw-w64-x86-64 && export CGO_ENABLED=1 && go mod tidy && go mod download"
+          pre_command: "apt-get update && apt-get install --no-install-recommends -y gcc musl-dev  && export CGO_ENABLED=1 && go mod tidy && go mod download"
 

@@ -3,7 +3,7 @@ import {getCookie} from "../utils/cookie";
 
 const serviceAxios = axios.create({
     withCredentials: false, // 跨域请求是否需要携带 cookie
-    baseURL: "http://localhost:8080" // 测试用
+    // baseURL: "http://localhost:8080" // 测试用
 });
 serviceAxios.interceptors.request.use(
     (config) => {

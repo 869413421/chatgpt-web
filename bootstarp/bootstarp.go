@@ -3,8 +3,10 @@ package bootstrap
 import (
 	"github.com/869413421/chatgpt-web/config"
 	"github.com/869413421/chatgpt-web/pkg/logger"
-	"net/http"
+	"github.com/gin-gonic/gin"
+	"mime"
 	"strconv"
+	"strings"
 )
 
 func StartWebServer() {
@@ -33,7 +35,19 @@ func initTemplateDir() {
 
 // initStaticServer 初始化静态文件处理
 func initStaticServer() {
-	router.StaticFS("/assets", http.Dir("static/assets"))
+	router.GET("/assets/:filename", func(c *gin.Context) {
+		fileName := c.Param("filename")
+		nameSlice := strings.Split(fileName, ".")
+		ext := nameSlice[len(nameSlice)-1]
+		if ext == "js" {
+			c.Header("Content-Type", "application/javascript")
+		} else {
+			c.Header("Content-Type", mime.TypeByExtension(ext))
+		}
+		c.File("static/assets/" + c.Param("filename"))
+	})
+
+	//router.StaticFS("/assets", http.Dir("static/assets"))
 	router.StaticFile("logo192.png", "static/logo192.png")
 	router.StaticFile("logo512.png", "static/logo512.png")
 	router.StaticFile("favicon.ico", "static/favicon.ico")

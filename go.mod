@@ -7,7 +7,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.7.7
 	github.com/glebarez/sqlite v1.7.0
-	github.com/sashabaranov/go-gpt3 v1.3.0
+	github.com/sashabaranov/go-openai v1.5.7
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/net v0.8.0
 	gorm.io/gorm v1.24.6

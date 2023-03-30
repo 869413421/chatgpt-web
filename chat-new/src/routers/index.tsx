@@ -32,21 +32,6 @@ export interface UserInfo {
   permissionRoutes: string[];
   code: number;
 }
-/**
- * @description 模拟请求用户信息
- * @returns
- */
-// export const getUserInfo = (): Promise<UserInfo> => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve({
-//         name: 'jianjian',
-//         permissionRoutes: ['chat'],
-//         code: 0,
-//       })
-//     }, 1000)
-//   })
-// }
 
 /**
  * @description 这个loader函数会在路由渲染前触发,所以可以用来做路由权限控制和登陆重定向
@@ -78,12 +63,6 @@ const routerConfig: RouteObject[] = [
     errorElement: <ErrorBoundary />,
     loader: rootLoader,
     element: LazyLoad(ChatContainer, "chat"),
-    // children: [
-    //   {
-    //     path: '/chat',
-    //     element: LazyLoad(ChatContainer, 'chat'),
-    //   },
-    // ],
   },
   {
     path: "/login",

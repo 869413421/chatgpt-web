@@ -2,14 +2,14 @@ import serviceAxios from "./request";
 
 export const getUserInfo = () => {
     return serviceAxios({
-        url: "/auth/info",
+        url: "auth/info",
         method: "post",
     });
 };
 
 export const login = (params: Object) => {
     return serviceAxios({
-        url: "/user/auth",
+        url: "user/auth",
         method: "post",
         data: params,
     });
@@ -17,7 +17,7 @@ export const login = (params: Object) => {
 
 export const completion = (chatContext:any) => {
     return serviceAxios({
-        url: "/chat/completion",
+        url: "chat/completion",
         method: "post",
         data: {
             messages: chatContext,

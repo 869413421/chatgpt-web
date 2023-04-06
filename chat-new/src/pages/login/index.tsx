@@ -32,7 +32,7 @@ const Login = () => {
       return toast.show("请检查账号与密码是否为空", undefined);
     }
   };
-  const handleInputChange = (val: string, event: any) => {
+  const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setLoginForm({ ...loginForm, [name]: value });
   };
@@ -55,26 +55,24 @@ const Login = () => {
           className="form-Item"
         >
           <div className={css.m_top}>
-            <Input
+            <input
               className="input-item"
               type="text"
               name="username"
               id="username"
-              autoSize
               value={loginForm.username}
-              onChange={(val:string, e) => handleInputChange(val, e)}
+              onChange={handleInputChange}
               placeholder="请输入账号"
             />
           </div>
           <div className={css.m_top}>
-            <Input
+            <input
               className="input-item"
               type="password"
               name="password"
               id="password"
-              autoSize
               value={loginForm.password}
-              onChange={(val: string, e) => handleInputChange(val, e)}
+              onChange={handleInputChange}
               placeholder="请输入密码"
             />
           </div>

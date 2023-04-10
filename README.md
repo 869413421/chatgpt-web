@@ -216,12 +216,6 @@ server {
         proxy_http_version 1.1;
         # 反向代理超时时间设定(OpenAI的反应比较慢，设定为120秒后才超时)
         proxy_read_timeout 120s;
-
-        # 将index.html中的绝对路径更改为相对路径
-        sub_filter 'src="/' 'src="';
-        sub_filter 'href="/' 'href="';
-        sub_filter_types text/html;
-        sub_filter_once off;
     }
 
     # 如果chatgpt-web放置于根路径，使用这个location配置
